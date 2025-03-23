@@ -67,12 +67,7 @@
                         style="background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);"
                       >
                         Log in
-                      </button>
-
-                      <!-- Forgot password link -->
-                      <a href="#!" class="text-sm text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100">
-                        Forgot password?
-                      </a>
+                      </button> 
                     </div>
 
                     <!-- Register button -->
