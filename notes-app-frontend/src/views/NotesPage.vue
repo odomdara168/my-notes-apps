@@ -253,5 +253,5 @@ const changePage = (page: number) => {
 </script>
 
 <style scoped>
-/* Custom styles if needed */
+
 </style>
