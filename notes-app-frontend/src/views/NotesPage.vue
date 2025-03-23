@@ -1,21 +1,19 @@
 <template>
   <div class="min-h-full bg-gradient-to-r from-gray-200 to-gray-300">
     <!-- Navigation -->
-    <nav class="bg-gradient-to-r from-[rgb(238,119,36)] to-[rgb(216,54,58)] shadow-lg">
+    <nav class="bg-gradient-to-r from-orange-500 to-red-500 shadow-lg">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
           <div class="flex items-center">
-            <div class="flex-shrink-0 text-white text-3xl font-semibold">My Notes</div>
+            <div class="text-white text-3xl font-semibold">My Notes</div>
           </div>
-          <div class="flex space-x-4">
-            <button @click="logout" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition">Logout</button>
-          </div>
+          <button @click="logout" class="text-white px-4 py-2 rounded-md hover:bg-gray-700 transition">Logout</button>
         </div>
       </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-lg space-y-6">
+    <div class="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-lg space-y-6 mt-8">
       <!-- Search and Sort -->
       <div v-if="!viewMode" class="flex flex-wrap gap-4 mb-6">
         <input v-model="searchTitle" @input="handleSearch" placeholder="Search by title..." class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
@@ -30,19 +28,28 @@
         </select>
       </div>
 
-      <!-- Add Note Form -->
-      <form @submit.prevent="handleCreate" class="mb-6">
-        <div class="mb-4">
-          <input v-model="newNoteTitle" placeholder="Title" class="w-full p-3 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-purple-500" />
-          <textarea v-model="newNoteContent" placeholder="Content" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-y min-h-[100px] max-h-[300px]"></textarea>
+      <!-- Create New Note -->
+      <form @submit.prevent="handleCreate" class="bg-gray-100 p-6 rounded-xl shadow-md space-y-4">
+        <h3 class="text-lg font-semibold text-gray-800">Create a New Note</h3>
+
+        <div>
+          <label class="block text-gray-600 font-medium mb-1">Title</label>
+          <input v-model="newNoteTitle" placeholder="Enter note title..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" />
         </div>
-        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-700 transition-transform transform hover:scale-105">Add Note</button>
-        <p v-if="createErrorMessage" class="text-red-600 mt-2">{{ createErrorMessage }}</p> <!-- Show create error message -->
+
+        <div>
+          <label class="block text-gray-600 font-medium mb-1">Content</label>
+          <textarea v-model="newNoteContent" placeholder="Write your note here..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-y min-h-[120px] max-h-[300px]"></textarea>
+        </div>
+
+        <p v-if="createErrorMessage" class="text-red-600 text-sm">{{ createErrorMessage }}</p>
+
+        <button type="submit" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-700 transition-transform transform hover:scale-105">Add Note</button>
       </form>
 
       <!-- Notes List -->
       <div v-if="notes.length === 0" class="text-gray-500 text-center">No notes found.</div>
-      <div v-for="note in notes" :key="note.id" class="bg-white border border-gray-200 p-4 rounded-lg mb-4 shadow-lg transition-transform transform hover:shadow-xl hover:scale-105">
+      <div v-for="note in notes" :key="note.id" class="bg-yellow-100 border border-yellow-200 p-6 rounded-lg mb-4 shadow-md hover:bg-yellow-200 transition-transform transform hover:shadow-xl">
         <h2 class="text-xl font-bold text-gray-800 mb-2">{{ note.title }}</h2>
         <p class="text-gray-600 text-sm mb-4">Created: {{ formatDate(note.createdAt) }}</p>
 
@@ -56,15 +63,18 @@
             {{ viewingNoteId === note.id ? 'Hide' : 'View' }}
           </button>
 
+          <!-- Edit/Delete buttons -->
           <template v-if="editingNoteId !== note.id">
-            <button @click="startEdit(note)" class="bg-yellow-500 text-white px-3 py-1 rounded-lg hover:bg-yellow-600 transition">Edit</button>
+            <button @click="startEdit(note)" class="bg-yellow-600 text-white px-3 py-1 rounded-lg hover:bg-yellow-700 transition">Edit</button>
             <button @click="handleDelete(note.id)" class="bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition">Delete</button>
           </template>
 
+          <!-- Edit form -->
           <div v-else class="w-full mt-4">
             <input v-model="editNoteTitle" class="w-full p-3 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
             <textarea v-model="editNoteContent" class="w-full p-3 border border-gray-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y min-h-[100px] max-h-[300px]"></textarea>
-            <div v-if="editErrorMessage" class="text-red-600 mt-2">{{ editErrorMessage }}</div> <!-- Show edit error message -->
+            <div v-if="editErrorMessage" class="text-red-600 mt-2">{{ editErrorMessage }}</div>
+
             <div class="flex flex-wrap gap-2">
               <button @click="handleUpdate(note.id)" class="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition">Save</button>
               <button @click="cancelEdit" class="px-3 py-1 rounded-lg border border-gray-300 hover:bg-gray-100 transition">Cancel</button>
@@ -73,53 +83,36 @@
         </div>
       </div>
 
-      <!-- Pagination -->
-      <div v-if="pagination.totalPages > 1" class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 mt-8">
-        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-          <div>
-            <p class="text-sm text-gray-700">
-              Showing
-              <span class="font-medium">{{ (pagination.currentPage - 1) * pagination.pageSize + 1 }}</span>
-              to
-              <span class="font-medium">{{ Math.min(pagination.currentPage * pagination.pageSize, pagination.totalRecords) }}</span>
-              of
-              <span class="font-medium">{{ pagination.totalRecords }}</span>
-              results
-            </p>
-          </div>
-          <div>
-            <nav class="inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-              <button @click="goToPage(pagination.currentPage - 1)" :disabled="pagination.currentPage === 1" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:outline-none">
-                <span class="sr-only">Previous</span>
-                <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
-                </svg>
-              </button>
-
-              <span v-for="page in pagination.totalPages" :key="page">
-                <button @click="goToPage(page)" :class="['relative inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-gray-300 ring-inset hover:bg-gray-50', pagination.currentPage === page ? 'bg-indigo-600 text-white' : 'text-gray-900']">{{ page }}</button>
-              </span>
-
-              <button @click="goToPage(pagination.currentPage + 1)" :disabled="pagination.currentPage === pagination.totalPages" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus:outline-none">
-                <span class="sr-only">Next</span>
-                <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                </svg>
-              </button>
-            </nav>
-          </div>
+      <!-- Pagination Controls -->
+      <div v-if="pagination.totalPages > 1" class="flex justify-between mt-6">
+        <button
+          :disabled="pagination.currentPage === 1"
+          @click="changePage(pagination.currentPage - 1)"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md disabled:opacity-50 hover:bg-blue-700 transition"
+        >
+          Previous
+        </button>
+        <div class="flex items-center space-x-4">
+          <span>Page {{ pagination.currentPage }} of {{ pagination.totalPages }}</span>
         </div>
+        <button
+          :disabled="pagination.currentPage === pagination.totalPages"
+          @click="changePage(pagination.currentPage + 1)"
+          class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md disabled:opacity-50 hover:bg-blue-700 transition"
+        >
+          Next
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import notesService, { NoteDTO } from '@/services/notesService'
-import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import notesService, { NoteDTO } from '@/services/notesService';
+import { useRouter } from 'vue-router';
 
-const notes = ref<NoteDTO[]>([]);  // Initialize as an empty array
+const notes = ref<NoteDTO[]>([]);
 const pagination = ref({
   currentPage: 1,
   pageSize: 15,
@@ -133,20 +126,14 @@ const sortOrder = ref('desc');
 
 const newNoteTitle = ref('');
 const newNoteContent = ref('');
-
-// Error message for create note
 const createErrorMessage = ref('');
 
-// Error message for edit note
+const editNoteTitle = ref('');
+const editNoteContent = ref('');
 const editErrorMessage = ref('');
 
 const editingNoteId = ref<number | null>(null);
-const editNoteTitle = ref('');
-const editNoteContent = ref('');
-
 const viewingNoteId = ref<number | null>(null);
-const viewMode = ref(false);
-
 const router = useRouter();
 
 const fetchNotes = async () => {
@@ -158,11 +145,11 @@ const fetchNotes = async () => {
       page: pagination.value.currentPage
     });
 
-    notes.value = response.data;  // Ensure this is set correctly
-    pagination.value = response.pagination;  // Ensure pagination is set correctly
+    notes.value = response.data;
+    pagination.value = response.pagination;
   } catch (error: any) {
     console.error('Error fetching notes:', error);
-    notes.value = [];  // Set notes to an empty array on error
+    notes.value = [];
     if (error.response?.status === 401) {
       router.push('/login');
     }
@@ -172,15 +159,11 @@ const fetchNotes = async () => {
 onMounted(fetchNotes);
 
 const handleCreate = async () => {
-  // Reset error message
   createErrorMessage.value = '';
-
-  // Check for empty title
   if (!newNoteTitle.value) {
     createErrorMessage.value = 'Title is required.';
     return;
   }
-
   try {
     await notesService.createNote({
       title: newNoteTitle.value,
@@ -211,7 +194,6 @@ const cancelEdit = () => {
 const handleUpdate = async (id: number | undefined) => {
   if (!id) return;
 
-  // Check if the title is empty
   if (!editNoteTitle.value) {
     editErrorMessage.value = 'Title is required.';
     return;
@@ -251,26 +233,25 @@ const handleSortChange = () => {
   fetchNotes();
 };
 
-const goToPage = (page: number) => {
-  if (page < 1 || page > pagination.value.totalPages) return;
-  pagination.value.currentPage = page;
-  fetchNotes();
+const toggleNoteView = (id: number | undefined) => {
+  if (!id) return;
+  viewingNoteId.value = viewingNoteId.value === id ? null : id;
 };
 
 const logout = () => {
   router.push('/');
 };
 
-const toggleNoteView = (id: number | undefined) => {
-  if (!id) return;
-  viewingNoteId.value = viewingNoteId.value === id ? null : id;
-};
-
 const formatDate = (date: string | Date) => {
   return new Date(date).toLocaleString();
+};
+
+const changePage = (page: number) => {
+  pagination.value.currentPage = page;
+  fetchNotes();
 };
 </script>
 
 <style scoped>
-/* Optional: customize scrollbars */
+/* Custom styles if needed */
 </style>
