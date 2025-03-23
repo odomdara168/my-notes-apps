@@ -29,19 +29,17 @@ git clone https://github.com/odomdara168/my-notes-apps.git
 Run the scripts in /backend/Database/:init.sql (Creates DB & tables)
 
 3. Backend API
- cd my-notes-apps\NotesApp-Backend\NotesAPI
-**appsettings.json**
-**Pls Change Connection String in appsettings.json according to your SQL server setup**
-dotnet restore
-dotnet build
-dotnet run
+ - cd my-notes-apps\NotesApp-Backend\NotesAPI
+ - (**appsettings.json*- **Pls Change Connection String in appsettings.json according to your SQL server setup**)
+ -dotnet restore
+ -dotnet build
+ -dotnet run
 
 
 5. Frontend App
-cd my-notes-apps\notes-app-frontend
-npm install
-npm run dev
-Open: http://localhost:5173
+-cd my-notes-apps\notes-app-frontend
+-npm install
+-npm run dev
 
 
 🔒 Authentication
