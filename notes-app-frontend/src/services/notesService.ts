@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-// ✅ Axios instance with baseURL and interceptor
+
 const api = axios.create({
   baseURL: 'http://localhost:5122/api'
 })
@@ -13,14 +13,14 @@ api.interceptors.request.use(config => {
   return config
 })
 
-// ✅ Note DTO - adjust if your backend changes
+
 export interface NoteDTO {
   id?: number
   title: string
   content: string
 }
 
-// ✅ Get notes (supports search, sorting, pagination)
+
 export const getNotes = async (params?: {
   title?: string
   sortBy?: string
@@ -36,7 +36,7 @@ export const getNotes = async (params?: {
   }
 }
 
-// ✅ Get single note by ID (optional, but keeping it here)
+
 export const getNoteById = async (id: number) => {
   try {
     const response = await api.get(`/notes/${id}`)
@@ -58,7 +58,6 @@ export const createNote = async (note: NoteDTO) => {
   }
 }
 
-// ✅ Update existing note
 export const updateNote = async (id: number, note: NoteDTO) => {
   try {
     const response = await api.put(`/notes/${id}`, note)
@@ -69,7 +68,7 @@ export const updateNote = async (id: number, note: NoteDTO) => {
   }
 }
 
-// ✅ Delete note
+
 export const deleteNote = async (id: number) => {
   try {
     const response = await api.delete(`/notes/${id}`)
@@ -80,7 +79,7 @@ export const deleteNote = async (id: number) => {
   }
 }
 
-// ✅ Export for easier imports
+
 export default {
   getNotes,
   getNoteById,

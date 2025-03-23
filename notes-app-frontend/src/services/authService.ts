@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-// ✅ Axios instance
+
 const api = axios.create({
-  baseURL: 'http://localhost:5122/api' // Replace with your backend URL
+  baseURL: 'http://localhost:5122/api'
 })
 
-// ✅ Attach token to requests automatically (if available)
+
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('token')
   if (token && config.headers) {
@@ -14,10 +14,10 @@ api.interceptors.request.use(config => {
   return config
 })
 
-// ✅ Interface matching your backend DTO
+
 export interface UserDTO {
   username: string
-  password: string // ✅ Must match UserDto in C#
+  password: string 
 }
 
 // ✅ Register function

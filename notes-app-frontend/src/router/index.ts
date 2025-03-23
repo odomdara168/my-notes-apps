@@ -3,13 +3,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 // Views
 import HomeView from '@/views/HomeView.vue'
 import RegisterView from '@/views/RegisterView.vue'
-import LoginView from '@/views/LoginView.vue'
-import NotesPage from '@/views/NotesPage.vue' // Make sure this is correct!
+
+import NotesPage from '@/views/NotesPage.vue' 
 
 const routes = [
   { path: '/', name: 'Home', component: HomeView },
   { path: '/register', name: 'Register', component: RegisterView },
-  { path: '/login', name: 'Login', component: LoginView },
   {
     path: '/notes',
     name: 'Notes',
