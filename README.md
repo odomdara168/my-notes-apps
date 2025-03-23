@@ -20,13 +20,18 @@ SQL Server
 SQL Server Management Studio (SSMS) 
 
 ⚙️ How to Run Locally
+
 1. Clone the repo
+   
 git clone https://github.com/odomdara168/my-notes-apps.git
 
 2. Setup SQL Server Database
-  -Set up SQL Server 
+
+  -Set up SQL Server
+   
   -Open SSMS
-Run the scripts in /backend/Database/:init.sql (Creates DB & tables)
+  
+  -Run the scripts in /backend/Database/:init.sql (Creates DB & tables)
 
 3. Backend API
  - cd my-notes-apps\NotesApp-Backend\NotesAPI
@@ -36,7 +41,7 @@ Run the scripts in /backend/Database/:init.sql (Creates DB & tables)
  -dotnet run
 
 
-5. Frontend App
+4. Frontend App
 -cd my-notes-apps\notes-app-frontend
 -npm install
 -npm run dev
