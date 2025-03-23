@@ -70,18 +70,19 @@
                       </button> 
                     </div>
 
-                    <!-- Register button -->
-                    <div class="flex items-center justify-between pb-6">
-                      <p class="mb-0 me-2 text-sm text-neutral-600 dark:text-neutral-400">
-                        Don't have an account?
-                      </p>
-                      <router-link
-                        to="/register"
-                        class="inline-block rounded border-2 border-neutral-200 px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-neutral-200 transition duration-150 ease-in-out hover:border-neutral-300 hover:bg-neutral-100/50 hover:text-neutral-700"
-                      >
-                        Register
-                      </router-link>
-                    </div>
+               <!-- Register button -->
+                  <div class="flex items-center justify-between pb-6">
+                    <p class="mb-0 me-2 text-sm text-neutral-600 dark:text-neutral-400">
+                      Don't have an account?
+                    </p>
+                    <router-link
+                      to="/register"
+                      class="inline-block rounded border-2 border-neutral-200 px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-neutral-500 transition duration-150 ease-in-out hover:border-neutral-300 hover:bg-neutral-100/50 hover:text-neutral-700"
+                    >
+                      Register
+                    </router-link>
+                  </div>
+
                   </form>
                 </div>
               </div>
@@ -90,12 +91,15 @@
               <div class="flex items-center rounded-b-lg lg:w-6/12 lg:rounded-e-lg lg:rounded-bl-none"
                 style="background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)">
                 <div class="px-4 py-6 text-white md:mx-6 md:p-12">
-                  <h4 class="mb-6 text-xl font-semibold">
-                    Welcome to NoteWorthy
-                  </h4>
-                  <p class="text-sm">
-                    A place to store and organize your notes securely
-                  </p>
+                 <h4 class="mb-6 text-xl font-semibold">
+  Welcome to NoteWorthy
+</h4>
+<p class="text-sm">
+  The only place where your thoughts, ideas, and to-do lists are as organized as your dreams. Keep your notes secure, accessible, and always at your fingertips—because every great idea deserves a home. 🚀
+</p>
+<footer class="text-center text-gray-400 text-sm mt-10">
+  <p>Created with ❤️ by Odom DARA</p>
+</footer>
                 </div>
               </div>
             </div>
