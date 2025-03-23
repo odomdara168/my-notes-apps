@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "esnext",                      // Use the latest JS features
+    "module": "esnext",                      // ES module output
+    "moduleResolution": "node",              // Resolve modules like Node.js
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"], // Libraries for browser & modern JS
+    "allowSyntheticDefaultImports": true,    // Allow default imports even if module doesn't have them
+    "esModuleInterop": true,                 // Interop between CommonJS and ES modules
+
+    /* Type Checking */
+    "strict": true,                          // Enable all strict type-checking options
+    "skipLibCheck": true,                    // Skip checking all .d.ts files (faster compile)
+    "forceConsistentCasingInFileNames": true,// Enforce consistent casing
+
+    /* Decorators (optional for Vue 3 with Class API, not usually needed in Composition API) */
+    "experimentalDecorators": true,          // Enables decorators, if you ever use them
+
+    /* JSX / TSX */
+    "jsx": "preserve",                       // Keep JSX as-is for Vue
+
+    /* Output */
+    "sourceMap": true,                       // Include source maps
+    "useDefineForClassFields": true,         // Align class field declarations with standard
+
+    /* Paths / Aliases */
+    "baseUrl": ".",                          // Root path for module resolution
+    "paths": {
+      "@/*": ["src/*"]                       // Shortcut alias for src/ folder
+    },
+
+    /* Type Definitions */
+    "types": [
+      "webpack-env",
+      "pinia"                                // ✅ Tell TypeScript about Pinia types
+    ]
+  },
+
+  /* Files to Include */
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",                          // ✅ Vue files
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
+
+  /* Files to Exclude */
+  "exclude": [
+    "node_modules"                           // ✅ Skip node_modules folder
+  ]
+}
