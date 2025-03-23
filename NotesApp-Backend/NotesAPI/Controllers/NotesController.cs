@@ -64,7 +64,7 @@ namespace NotesAPI.Controllers
             });
 
             var dataSql = $@"
-                SELECT Id, Title, CreatedAt, UpdatedAt
+                SELECT Id,Content, Title, CreatedAt, UpdatedAt
                 FROM Notes
                 {whereClause}
                 ORDER BY {sortBy} {sortOrder.ToUpper()}
