@@ -67,8 +67,12 @@
                 <div class="px-4 py-6 text-white md:mx-6 md:p-12">
                   <h4 class="mb-6 text-xl font-semibold">Sign Up For NoteWorthy</h4>
                   <p class="text-sm">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    You’ve just made a great choice by signing up for NoteWorthy! We hope you’ll find it, well, *worthy* of your notes—no pun intended! 😉
                   </p>
+                  <footer class="text-center text-gray-400 text-sm mt-10">
+  <p>Created with ❤️ by Odom DARA</p>
+</footer>
+
                 </div>
               </div>
             </div>
