@@ -28,8 +28,13 @@
         </select>
       </div>
 
-      <!-- Create New Note -->
-      <form @submit.prevent="handleCreate" class="bg-gray-100 p-6 rounded-xl shadow-md space-y-4">
+      <!-- Toggle Create Note Button -->
+      <button @click="toggleCreateForm" class="w-12 h-12 bg-green-600 text-white rounded-full fixed bottom-10 right-10 shadow-lg flex items-center justify-center hover:bg-green-700 transition">
+        <span class="text-2xl font-bold">+</span>
+      </button>
+
+      <!-- Create New Note Form (Toggled) -->
+      <div v-if="showCreateForm" class="bg-gray-100 p-6 rounded-xl shadow-md space-y-4">
         <h3 class="text-lg font-semibold text-gray-800">Create a New Note</h3>
 
         <div>
@@ -44,8 +49,8 @@
 
         <p v-if="createErrorMessage" class="text-red-600 text-sm">{{ createErrorMessage }}</p>
 
-        <button type="submit" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-700 transition-transform transform hover:scale-105">Add Note</button>
-      </form>
+        <button type="submit" @click="handleCreate" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-700 transition-transform transform hover:scale-105">Add Note</button>
+      </div>
 
       <!-- Notes List -->
       <div v-if="notes.length === 0" class="text-gray-500 text-center">No notes found.</div>
@@ -103,6 +108,15 @@
           Next
         </button>
       </div>
+
+      <!-- Welcome Popup -->
+      <div v-if="showWelcomePopup" class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+        <div class="bg-white p-8 rounded-xl shadow-xl max-w-sm w-full">
+          <h2 class="text-xl font-semibold mb-4">Welcome to NoteWorthy!</h2>
+          <p class="mb-4">Click the "+" button to create a new note!</p>
+          <button @click="dismissWelcomePopup" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-700 transition">Got it</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -134,6 +148,8 @@ const editErrorMessage = ref('');
 
 const editingNoteId = ref<number | null>(null);
 const viewingNoteId = ref<number | null>(null);
+const showCreateForm = ref(false);  // Controls visibility of the "Create Note" form
+const showWelcomePopup = ref(true);  // Controls visibility of the welcome popup
 const router = useRouter();
 
 const fetchNotes = async () => {
@@ -174,6 +190,7 @@ const handleCreate = async () => {
     newNoteContent.value = '';
     pagination.value.currentPage = 1;
     fetchNotes();
+    showCreateForm.value = false;  // Hide form after note creation
   } catch (error) {
     console.error('Error creating note:', error);
   }
@@ -238,6 +255,10 @@ const toggleNoteView = (id: number | undefined) => {
   viewingNoteId.value = viewingNoteId.value === id ? null : id;
 };
 
+const toggleCreateForm = () => {
+  showCreateForm.value = !showCreateForm.value;  // Toggle the form visibility
+};
+
 const logout = () => {
   router.push('/');
 };
@@ -250,8 +271,12 @@ const changePage = (page: number) => {
   pagination.value.currentPage = page;
   fetchNotes();
 };
+
+const dismissWelcomePopup = () => {
+  showWelcomePopup.value = false;  // Hide welcome popup after "Got it" is clicked
+};
 </script>
 
 <style scoped>
-
+/* Custom styles if needed */
 </style>
