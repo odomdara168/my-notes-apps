@@ -32,7 +32,7 @@ namespace NotesAPI.Controllers
             var userId = GetUserId();
             using var connection = _context.CreateConnection();
 
-            const int pageSize = 10;
+            const int pageSize = 7;
 
             var validSortBy = new[] { "CreatedAt", "UpdatedAt", "Title" };
             var validSortOrder = new[] { "asc", "desc" };
